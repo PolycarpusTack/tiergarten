@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiergarten - Modern UI Mockup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        /* Custom animations */
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .animate-slide-in { animation: slideIn 0.3s ease-out; }
+        .animate-fade-in { animation: fadeIn 0.2s ease-out; }
+        .animate-pulse-slow { animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        
+        /* Glass morphism effects */
+        .glass {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-dark {
+            backdrop-filter: blur(10px);
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Dark mode styles */
+        .dark {
+            color-scheme: dark;
+        }
+        
+        .dark .glass {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        /* Hover effects */
+        .ticket-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .ticket-card:hover {
+            transform: translateY(-4px) scale(1.02);
+        }
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Priority colors */
+        .priority-highest { border-color: #dc2626; background-color: #fef2f2; }
+        .priority-high { border-color: #f59e0b; background-color: #fffbeb; }
+        .priority-medium { border-color: #3b82f6; background-color: #eff6ff; }
+        .priority-low { border-color: #10b981; background-color: #f0fdf4; }
+        
+        .dark .priority-highest { background-color: rgba(220, 38, 38, 0.1); }
+        .dark .priority-high { background-color: rgba(245, 158, 11, 0.1); }
+        .dark .priority-medium { background-color: rgba(59, 130, 246, 0.1); }
+        .dark .priority-low { background-color: rgba(16, 185, 129, 0.1); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <div id="app" class="min-h-screen">
+        <!-- Top Navigation -->
+        <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+            <div class="px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <!-- Left side -->
+                    <div class="flex items-center">
+                        <h1 class="text-2xl font-bold gradient-text">Tiergarten</h1>
+                        
+                        <!-- Global Search -->
+                        <div class="ml-8 relative">
+                            <input type="text" placeholder="Search tickets, clients, or actions..." 
+                                class="w-96 pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                            <svg class="absolute left-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Right side -->
+                    <div class="flex items-center space-x-4">
+                        <!-- Quick Stats -->
+                        <div class="hidden lg:flex items-center space-x-6">
+                            <div class="text-center">
+                                <p class="text-2xl font-bold text-red-600">3</p>
+                                <p class="text-xs text-gray-500">Exceptions</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-bold text-amber-600">12</p>
+                                <p class="text-xs text-gray-500">High Priority</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-bold text-blue-600">45</p>
+                                <p class="text-xs text-gray-500">Total Active</p>
+                            </div>
+                        </div>
+                        
+                        <div class="h-8 w-px bg-gray-200"></div>
+                        
+                        <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            Add Widget
+                        </button>
+                        
+                        <!-- Notifications -->
+                        <button class="relative p-2 text-gray-600 hover:text-gray-900 transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                            </svg>
+                            <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full animate-pulse"></span>
+                        </button>
+                        
+                        <!-- Dark Mode Toggle -->
+                        <button onclick="toggleDarkMode()" class="p-2 text-gray-600 hover:text-gray-900 transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                            </svg>
+                        </button>
+                        
+                        <!-- User Menu -->
+                        <button class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                JD
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="flex h-[calc(100vh-4rem)]">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-white border-r border-gray-200 flex flex-col">
+                <nav class="flex-1 px-3 py-4 space-y-1">
+                    <button class="w-full flex items-center px-3 py-2 bg-blue-50 text-blue-600 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        <span class="ml-3 font-medium">Dashboard</span>
+                    </button>
+                    
+                    <button class="w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                        <span class="ml-3 font-medium">Tickets</span>
+                    </button>
+                    
+                    <button class="w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <span class="ml-3 font-medium">Clients</span>
+                    </button>
+                    
+                    <button class="w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span class="ml-3 font-medium">Rules</span>
+                    </button>
+                    
+                    <button class="w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span class="ml-3 font-medium">Analytics</span>
+                    </button>
+                </nav>
+                
+                <div class="px-3 py-4 border-t border-gray-200">
+                    <p class="text-xs text-gray-500 mb-2">Quick Actions</p>
+                    <button class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                        Import from JIRA
+                    </button>
+                    <button class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                        Export Report
+                    </button>
+                </div>
+            </aside>
+            
+            <!-- Main Content -->
+            <main class="flex-1 overflow-auto bg-gray-50 p-6">
+                <!-- Page Header -->
+                <div class="mb-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Overview Dashboard</h2>
+                            <p class="text-gray-600 mt-1">Real-time ticket management and prioritization</p>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <div class="flex bg-gray-100 rounded-lg p-1">
+                                <button class="px-3 py-1.5 bg-white text-gray-900 rounded-md text-sm font-medium shadow-sm">
+                                    Grid View
+                                </button>
+                                <button class="px-3 py-1.5 text-gray-600 rounded-md text-sm font-medium hover:text-gray-900">
+                                    List View
+                                </button>
+                                <button class="px-3 py-1.5 text-gray-600 rounded-md text-sm font-medium hover:text-gray-900">
+                                    Kanban
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Exception Alert -->
+                <div class="mb-6 p-4 bg-red-50 border-2 border-red-200 rounded-xl animate-fade-in">
+                    <div class="flex items-center">
+                        <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-red-800">
+                                3 Exception tickets require immediate attention
+                            </h3>
+                            <p class="mt-1 text-sm text-red-700">
+                                Critical issues from A+E Networks need to be addressed urgently.
+                            </p>
+                        </div>
+                        <div class="ml-auto">
+                            <button class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium">
+                                View Exceptions
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Widget Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <!-- Exception Tickets Widget -->
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Exception Tickets</h3>
+                        <div class="space-y-3">
+                            <!-- Exception Ticket Card -->
+                            <div class="ticket-card relative overflow-hidden rounded-lg border-2 priority-highest shadow-md ring-2 ring-red-500 ring-offset-2">
+                                <div class="absolute top-0 right-0 bg-red-600 text-white px-3 py-1 rounded-bl-lg text-xs font-bold animate-pulse-slow">
+                                    EXCEPTION
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <span class="font-mono text-sm font-semibold text-blue-600">PROJ-123</span>
+                                            <span class="ml-2 px-2 py-0.5 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">CA</span>
+                                            <span class="ml-1 px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded-full">Tier 1</span>
+                                        </div>
+                                        <span class="px-3 py-1 bg-red-500 text-white text-xs font-bold rounded-full">Highest</span>
+                                    </div>
+                                    <h4 class="text-gray-900 font-medium mb-2">Critical server outage, all hands on deck</h4>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">A+E Networks • Open</span>
+                                        <span class="px-3 py-1 bg-purple-600 text-white rounded-lg text-sm font-medium">CA</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Active CA Tickets Widget -->
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Active CA Tickets</h3>
+                        <div class="space-y-3">
+                            <!-- High Priority Ticket -->
+                            <div class="ticket-card rounded-lg border-2 priority-high shadow-md">
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <span class="font-mono text-sm font-semibold text-blue-600">WEB-456</span>
+                                            <span class="ml-2 px-2 py-0.5 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">CA</span>
+                                            <span class="ml-1 px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded-full">Tier 1</span>
+                                        </div>
+                                        <span class="px-3 py-1 bg-amber-500 text-white text-xs font-bold rounded-full">High</span>
+                                    </div>
+                                    <h4 class="text-gray-900 font-medium mb-2">Login button not working on Chrome</h4>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">BBC • In Progress</span>
+                                        <span class="px-3 py-1 bg-blue-600 text-white rounded-lg text-sm font-medium">PLAN</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Medium Priority Ticket -->
+                            <div class="ticket-card rounded-lg border-2 priority-medium shadow-md">
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <span class="font-mono text-sm font-semibold text-blue-600">SEC-303</span>
+                                            <span class="ml-2 px-2 py-0.5 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">CA</span>
+                                            <span class="ml-1 px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded-full">Tier 1</span>
+                                        </div>
+                                        <span class="px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded-full">Medium</span>
+                                    </div>
+                                    <h4 class="text-gray-900 font-medium mb-2">Investigate potential vulnerability</h4>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Paramount Global • Open</span>
+                                        <span class="px-3 py-1 bg-purple-600 text-white rounded-lg text-sm font-medium">CA</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Delegation Queue Widget -->
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Delegation Queue</h3>
+                        <div class="space-y-3">
+                            <!-- Delegated Ticket -->
+                            <div class="ticket-card rounded-lg border-2 priority-medium shadow-md">
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <span class="font-mono text-sm font-semibold text-blue-600">DATA-789</span>
+                                            <span class="ml-1 px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded-full">Tier 2</span>
+                                        </div>
+                                        <span class="px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded-full">Medium</span>
+                                    </div>
+                                    <h4 class="text-gray-900 font-medium mb-2">Weekly report failed to generate</h4>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Disney LATAM • Open</span>
+                                        <span class="px-3 py-1 bg-cyan-600 text-white rounded-lg text-sm font-medium">DELEGATE</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Low Priority Ticket -->
+                            <div class="ticket-card rounded-lg border-2 priority-low shadow-md">
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <span class="font-mono text-sm font-semibold text-blue-600">APP-101</span>
+                                            <span class="ml-1 px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded-full">Tier 3</span>
+                                        </div>
+                                        <span class="px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-full">Low</span>
+                                    </div>
+                                    <h4 class="text-gray-900 font-medium mb-2">UI glitch on the settings page</h4>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Foxtel • Backlog</span>
+                                        <span class="px-3 py-1 bg-slate-500 text-white rounded-lg text-sm font-medium">LATER</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats Section -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Total Tickets</p>
+                                <p class="text-2xl font-bold text-gray-900">156</p>
+                            </div>
+                            <div class="p-3 bg-blue-100 rounded-lg">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-xs text-gray-500">+12% from last week</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">CA Actions</p>
+                                <p class="text-2xl font-bold text-purple-600">28</p>
+                            </div>
+                            <div class="p-3 bg-purple-100 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-xs text-gray-500">18% of total tickets</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Avg Resolution</p>
+                                <p class="text-2xl font-bold text-gray-900">4.2h</p>
+                            </div>
+                            <div class="p-3 bg-green-100 rounded-lg">
+                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-xs text-green-600">-23% improvement</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">SLA Compliance</p>
+                                <p class="text-2xl font-bold text-gray-900">94%</p>
+                            </div>
+                            <div class="p-3 bg-amber-100 rounded-lg">
+                                <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-xs text-amber-600">Target: 95%</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script>
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            document.body.classList.toggle('bg-gray-900');
+            document.body.classList.toggle('text-gray-100');
+            
+            // Update all dark mode specific classes
+            const app = document.getElementById('app');
+            app.classList.toggle('bg-gray-900');
+            
+            // Update navigation
+            const nav = document.querySelector('nav');
+            nav.classList.toggle('bg-gray-900');
+            nav.classList.toggle('border-gray-700');
+            
+            // Update sidebar
+            const aside = document.querySelector('aside');
+            aside.classList.toggle('bg-gray-900');
+            aside.classList.toggle('border-gray-700');
+            
+            // Update main content
+            const main = document.querySelector('main');
+            main.classList.toggle('bg-gray-950');
+            
+            // Update all cards
+            document.querySelectorAll('.bg-white').forEach(el => {
+                el.classList.toggle('bg-gray-800');
+            });
+            
+            // Update text colors
+            document.querySelectorAll('.text-gray-900').forEach(el => {
+                el.classList.toggle('text-gray-100');
+            });
+            
+            // Update borders
+            document.querySelectorAll('.border-gray-200').forEach(el => {
+                el.classList.toggle('border-gray-700');
+            });
+        }
+        
+        // Add hover effects to ticket cards
+        document.querySelectorAll('.ticket-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px) scale(1.02)';
+                this.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = '';
+            });
+        });
+        
+        // Simulate real-time updates
+        setInterval(() => {
+            const statElements = document.querySelectorAll('.text-2xl.font-bold');
+            statElements.forEach(el => {
+                if (el.textContent.match(/^\d+$/)) {
+                    const current = parseInt(el.textContent);
+                    const change = Math.floor(Math.random() * 3) - 1;
+                    const newValue = Math.max(0, current + change);
+                    if (newValue !== current) {
+                        el.style.opacity = '0.5';
+                        setTimeout(() => {
+                            el.textContent = newValue;
+                            el.style.opacity = '1';
+                        }, 200);
+                    }
+                }
+            });
+        }, 5000);
+    </script>
+</body>
+</html>
